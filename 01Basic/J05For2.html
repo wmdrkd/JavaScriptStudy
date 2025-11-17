@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function gugudanPrint(){
+      //input과 select 태그에서 선택한 값 얻어오기
+      var dan = document.getElementById("dan").value;
+      var su = document.getElementById("su").value;
+      //구구단을 선택한 숫자만큼 반복해서 table태그 생성
+      var strGugu = "<table border='1'>";
+        //단(행)의 숫자만큼 반복해서 tr태그 생성
+        for(var x = 2 ; x <= dan ; x++){
+          strGugu += "<tr>";
+          //수(열)의 숫자만큼 td 생성
+            for(var y = 1 ; y <= su ; y++){
+            strGugu += "<td>" + x + " * " + y + " = " + (x*y) + "</td>";
+          }
+          strGugu += "</tr>";
+      }
+      /*
+      구구단의 전체 항모을 string변수에 복합대입연산자를 통해 연결해서 추가한다.
+      */  
+      strGugu += "</table>";
+      //문자열 전체를 해당 위치에 동적으로 삽입한다.
+      document.getElementById("here_gugudan").innerHTML = strGugu;
+    }
+    function selectNumber(){
+      let n = document.getElementById("dan").value;
+      document.getElementById("rangeValue").innerHTML = n;
+    }
+  </script>
+</head>
+<body>
+  <h2>반복문 활용</h2>
+  <div>
+    <span id="here_gugudan">
+      구구단은 여기에 출력됩니다.
+    </span>
+  </div>
+  <table border="1">
+    <tr>
+      <td>단</td>
+      <td>
+        <!-- 
+        rabge 입력상자는 슬라이드 모양으로 수를 선택할 수 있다.
+        min, max로 범위를 지정하고 step으로 증가치를 지정한다.
+        -->
+        <input type="range" id="dan" min="2" max="9" onchange="selectNumber(); gugudanPrint();">
+        <span id="rangeValue">n</span>
+      </td>
+    </tr>
+    <tr>
+      <td>수</td>
+      <td>
+        <select id="su" onchange="gugudanPrint();">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="button" value="구구단출력" onclick="gugudanPrint();">
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

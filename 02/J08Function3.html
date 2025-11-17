@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    let은 함수앤에서 사용하면 함수스코프(영역)를 가지게 된다.
+    즉 이 함수의 지역변수로 선언된다.
+    */
+    function myFunc1() {
+      let num1 = 1;
+    }
+
+    function myFunc2() {
+      console.log('myFunc2() 메서드안의 num1='+ num1);
+    }
+
+    /*
+    num1은 함수의 지역내에서만 사용할 수 있는 변수이므로 함수의 실행이 종료되면 메모리에서
+    소멸한다.
+    */
+    myFunc1();
+    //전역지역에서는 사용할수 없다. 에러발생
+    //myFunc2();
+    //다른 함수의 지역에서도 사용할 수 없다.
+
+    /*
+    let은 블록스코프 특성도 가진다.
+    따라서 for문의 블록을 벗어나면 메모리에서 소멸되어 사용할 수 없다.
+    */
+    for(let i = 0 ; i <= 10 ; i++){
+      console.log('for루프아 i=' + i);
+    }
+    //for문의 지역을 벗어나는 순간 소멸되므로 사용할 수 없다. 에러발생.
+    console.log('for루프밖 i=' + i);
+  </script>
+</body>
+</html>

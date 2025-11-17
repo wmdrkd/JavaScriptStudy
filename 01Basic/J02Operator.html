@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>연산자</h2>
+  <script>
+    console.error("산술 연산자");
+    //소괄호가 없다면 *, /, %가 +, -보다 우선 순위가 높다.
+    console.log("결과1=", 3 % 5 * 2 + 10 / 5); //결과 8
+    //정수와의 연산결과로 실수가 나올 수 있다.
+    console.log("결과2=", 3 / 5); //결과 0.6
+
+    console.error("비교 연산자");
+    //문자열끼리 비교연산을 할 수 있다.
+    console.log("결과1=", "가나다1" > '가나다');//결과 true
+    //3 > 9 는 false, 0eh false이므로 결과는 true
+    console.log("결과2=", 3 > 9 == 0);
+    //-1은 0이 아니므로 true
+    console.log("결과3=", (-1) ? true : false);
+    //null은 false
+    console.log("결과4=", (null) ? true : false);
+    //연산의 결과가 0이므로 false
+    console.log("결과5=",(10-10) ? true : false);
+    //string이므로 true
+    console.log("결과6=", ("자바스크립트") ? true : false);
+    /*
+    JavaScript에서는 0, null, false 일때만 false를 반환하고 나머지는 모두 true를 반환한다.
+    */
+
+    /*
+    JavaScript에서는 논리Or와 논리And가 동시에 나오면 And가 우선순위가 높아 먼저 평가된다.
+    */
+    console.error("논리 연산자");
+    console.log("결과=", (3 > 2) || 5 <= 10 && !(3 - 4));
+
+    /*
+    전위증가인 경우 변수의 값이 먼저 변경된 후 코드에 적용됨
+    후위증가인 경우 코드에 먼저 값이 적용된 후 변수의 값이 변경됨.
+    */
+    console.error("증감 연산자");
+    var num = 10
+    console.log("num=", ++num);
+    console.log("<br>num=", num++);
+    console.log("<br>num=", num);
+
+    //좌우측을 연산한 후 결과를 좌측항으로 대입
+    console.error("복합 대입 연산자");
+    console.log("num%=5=",num %= 5);
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>조건문 - if</h2>
+  <script>
+    console.error("형식1")
+    var num = 10;
+    //실행문자이 1줄이면 중괄호 생략 가능
+    if(num % 2 == 0){
+      console.log("%d는 짝수다", num);
+    }
+    if(num%2 == 0 && num > 10){
+      console.log("%d는 짝수고 10보다 크거나 같다.", num);
+    }
+
+    console.error("형식2")
+    if((num + 1) % 2 == 0){
+      console.log("짝수다.");
+    }
+    else{
+      console.log("홀수다.");
+    }
+
+    console.error("삼항연산자")
+    let result = ((num + 1) % 2 == 0) ? "짝수" : "홀수";
+    console.log("숫자 " + num + "은 " + result);
+
+    /*
+    prompt() : 사용자로부터 입력값을 받기 위한 대화창.
+              입력받은 값은 문자형식으로 반환되므로 연산을 위해 숫자형으로 변경 후 사용해야 한다.
+    */
+    console.error("형식3")
+    const age = parseInt(prompt("나이를 입력하세요: ", 10));
+
+    if(age >= 7 && age <= 12){
+      console.log("초등학생입니다.");
+    }
+    else if(age >= 13 && age <= 15){
+      console.log("중학생입니다.");
+    }
+    else if(age >= 16 && age <= 18){
+      console.log("고등학생입니다.");
+    }
+    else if(age >= 19 && age <= 24){
+      console.log("대학생입니다.");
+    }
+    else{
+      console.log("학생이 아닙니다.");30
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    /*
+    reduce함수
+    -배열을 순회하면서 원소의 값을 하나로 줄여서 반환한다.
+    -즉 반환값이 있으나 배열이 아닌 하나의 단일 결과값만 반환된다.
+    -thisArgs 대신 초기값을 사용한다.
+    -초기값의 유무에 따라서 반복횟수가 달라진다.
+    형식] 반환결과 = 원본배열.reduce(
+            콜백함수(이전회차의 반환값, 현재값, 인덱스, 원본배열){
+              실행부;
+              return 반환값; <- 여기서 반환된 값은 다음회차로 넘어간다.
+            }
+            ,초기값
+          );
+        ※ 최종 반환값이 반환결과로 할당된다.
+    실행과정]
+      #배열의 크기가 N이라 가정했을때
+      -초기값이 있다면 N번 반복한다.
+        previousVal
+          1회차 : 초기값으로 지정
+          2회차 :
+            return이 있다면 반환값으로 지정
+            return이 없다면 undefined 지정
+        currentVal
+          1회차 : 원본배열의 첫번째 값 지정
+          2회차 : 두번째 값 지정
+     
+      -초기값이 없다면 N-1번 반복한다.
+        previousVal
+          1회차 : 원본배열의 첫번째 값 지정
+          2회차 : 이전회차의 반환값이 지정됨(없다면 undefined)
+        currentVal
+          1회차 : 원본배열의 두번째 값 지정
+          2회차 : 원본배열의 세번째 값 지정
+    */
+    
+    /*
+    함수정의와 동시에 즉시 호출하기
+    (function(){
+      실행부;
+    })();
+    이와같이 함수를 소괄호로 감싼후 ()을 붙여주면 함수를 정의함과 동시에 호출되어 실행된다.
+    테스트 용도로 함수를 작성할때 많이 사용하는 방식이다.
+    단, 이미 실행이 된 상태로 체이지가 로드되므로 2번 호출할 수 없다.
+    */
+    
+    /*
+    형식1] 콜백함수 내에서 반환값이 없고, 초기값도 지정하지 않은 상태
+      previousVal
+        1회차 : 초기값이 없으므로 원본배열의 첫번째 값 할당
+        2회차 : 콜백함수의 반환값이 없으므로 undefined 할당
+      currentVal
+        1회차 : previousVal가 첫번째 값을 이미 할당 받았으므로 원본배열의 두번째 값 할당
+        2회차 : 세번째 값 할당(이후 순차적으로 할당됨)
+      따라서 전체 반복횟수는 4회
+    */
+    (function reduceTest1() {
+      console.error('reduceTest1() called..기본사용법');
+      var oldArray = [0,1,2,3,4];
+      oldArray.reduce(function(previousVal, currentVal, index, array){
+        console.log(previousVal, currentVal, index);
+      });
+    })();
+
+    /*
+    혈식 2] 초기값은 없으나, 반환값은 있는 콜백함수로 정의
+    */
+    function reduceTest2() {
+      console.error('reduceTest2() called..return값 사용하기');
+      var oldArray = [0,1,2,3,4];
+      //필요없는 경우 index, array 매개변수는 생략 가능
+      var sum = oldArray.reduce(function(previousVal, currentVal){
+        /*
+        previousVal : 0, 1, 3, 6
+        currentVal  : 1, 2, 3, 4
+        이와 같이 4회 반복된다.
+        */
+        console.log(previousVal, currentVal);
+        //previousVal와 currentVal를 더한 결과를 다음 회차로 반환
+        return previousVal + currentVal;
+      });
+      //마지막 회차에서 6+4의 결과를 반환하여 num에 할당됨
+      console.log(sum); //10
+    }
+
+    /*
+    형식 3] 초기값도 있고, 반환값도 있는 형태의 콜백함수 정의
+    */
+    function reduceTest3() {
+      console.error('reduceTest3() called..초기값 사용하기');
+      var oldArray = [0,1,2,3,4];
+      /*
+      초기값이 있으므로 privious의 첫번째 값은 2가 할당된다.
+      원본배열에서 이미 사용된 값이 없으므로 crrent에는 원본배열의 첫번째 요소가 할당된다.
+      previousVal : 2, 2, 3, 5, 8
+      currentVal  : 0, 1, 2, 3, 4
+      */
+      var sum = oldArray.reduce(function(previousVal, currentVal){
+        console.log(previousVal, currentVal);
+        return previousVal + currentVal;
+      }, 2); // <- 여기서 초기값을 설정한다.
+      /*
+      원본배열의 크기인 5회 반복되고, 마지막 회차에서 8+4의 결과를 반환하므로 최종결과는
+      12가 된다.
+      */
+      console.log(sum); //12
+    }
+
+    //초기값과 반환값이 있는 콜백함수를 통해 중복값 제거하기
+    function reduceTest4() {
+      console.error('reduceTest4() called..배열에서 중복값을 제거하는 함수 구현');
+      var oldArray = [0,1,2,3,3,3,4,5,5,6,6];
+      /*
+      초기값은 숫자형식 뿐만 아니라 문자열, 배열, 객체 등 모든 형식을 사용할 수 있다.
+      여기서는 빈 배열을 초기값으로 지정하여 previousVal의 첫번째 값은 []이 된다.
+      따라서 currentVal은 원본배열 전체 요소가 순서대로 할당된다.
+      */
+      var newArray = oldArray.reduce(function(previousVal, currentVal){
+        /*
+        indexOf()는 배열 내부에 특정 요소가 있는 경우 인덱스를 반환한다.
+        없는 경우에는 -1을 반환한다.
+        따라서 내부에 찾는 값이 없는 경우에만 previousVal 배열에 해당 요소를 추가한다.
+        */
+        if(previousVal.indexOf(currentVal) < 0){
+          previousVal.push(currentVal);
+        }
+        return previousVal;
+      }, []);
+      /*
+      previousVal : [] -> [0] -> [0, 1] -> [0, 1, 2] -> [0, 1, 2, 3] ....
+      currentVal  : 0, 1, 2, 3, 3, 3, 4, 5, 5, 6, 6
+      배열의 3까지 추가되면 그 이후에는 3이 더이상 추가되지 않는다.
+      즉 중복되는 숫자는 모두 제거된 상태로 결과를 출력할 수 있다.
+      */
+      console.log(newArray);
+    }
+  </script>
+</head>
+<body>
+  <h2>고차함수 - reduce()</h2>
+  <div>
+    <!-- 
+     이미 <script>태그내에서 사요되어 버렸으므로 별도로 호출할 수 없다.
+      해당 함수는 정의되지 않았다고 에러가 발생하게 된다.
+    -->
+    <input type="button" onclick="reduceTest1()" value="reduce1">
+    <!-- 
+    두번째 부터는 정상적으로 호출된다.
+    -->
+    <input type="button" onclick="reduceTest2()" value="reduce2">
+    <input type="button" onclick="reduceTest3()" value="reduce3">
+    <input type="button" onclick="reduceTest4()" value="reduce4">
+  </div>
+</body>
+</html>
