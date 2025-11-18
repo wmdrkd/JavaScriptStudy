@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function fnGEtElementsByName() {
+      var names = document.getElementsByName('inter');
+      for(let i = 0 ; i < names.length ; i++){
+        if(names[i].checked == true){
+          names[i].checked = null;
+          //names[i].checked = false;
+        }
+        else if(names[i].checked == false){
+          names[i].checked = "checked";
+          //names[i].checked = true;
+        }
+      }
+    }
+
+    function fnGetElementsClass() {
+      var portals = document.getElementsByClassName("portal");
+      for(let i = 0 ; i < portals.length ; i++){
+        alert(portals[i].innerHTML);
+      }
+    }
+  </script>
+
+  <h3>이름으로 얻어오기</h3>
+  <input type="checkbox" name="inter" value="POL" checked="checked">정치
+  <input type="checkbox" name="inter" value="ECO">경제
+  <input type="checkbox" name="inter" value="ENT" checked="checked">연예
+  <input type="button" value="name속서에 지정한 값으로 DOM객체 얻기" onclick="fnGEtElementsByName();">
+
+  <h2>클래스명으로 객체얻기</h2>
+  <ul>
+    <li><a href="#" class="portal">네<b>이</b>버</a></li>
+    <li><a href="#" class="portal">다음</a></li>
+    <li><a href="#" class="portal">네이트</a></li>
+  </ul>
+  <button onclick="fnGetElementsClass();">
+    클래스명으로 DOM객체 얻어오기
+  </button>
+</body>
+</html>

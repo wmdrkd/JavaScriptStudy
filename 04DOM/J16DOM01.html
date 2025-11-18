@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //영문명을 받아서 한글로 변환 후 반환
+    var getString = function (param) {
+      switch(param){
+        case "POL": return "정치";
+        case "ECO": return "경제";
+        case "ENT": return "연예";
+      }
+    }
+    //태그명을 통래 DOM에 접근하기 위한 함수
+    function fnGetElementsByTag() {
+      //HTML문서에 있는 모든 input태그를 얻어와서 배열로 저장
+      var inputs = document.getElementsByTagName("input");
+      var checkString = "", inputString;
+
+      //input 태그의 갯수만큼 순회
+      for(let i = 0 ; i < inputs.length ; i++){
+        /*
+        input 태그 중 checkbox 이면서 체트된 상태의 요소만 선택해서 value 속성값을 얻어온다.
+        */
+        if(inputs[i].type == "checkbox" && inputs[i].checked == true){
+          //영문을 한글로 변환 후 문자열 변수에 연결한다.
+          checkString += getString(inputs[i].value) + " ";
+
+          //checkbox를 button으로 동적 변경
+          inputs[i].type = "button";
+          inputs[i].value = "동적버튼변경"
+        }
+        /*
+        input 태그 중 type이 text이고, name이 txt인 요소를 선택해서 value 속성값을 
+        읽어와 변수에 저장한다.
+        */
+        if(inputs[i].type=="text" && inputs[i].name=="txt"){
+          inputString = inputs[i].value;
+        }
+      }
+      alert("선택한 값:" + checkString + ", 입력한값:" + inputString);
+    }
+    function fnGetDomain() {
+      //문서내의 모든 a태그를 선택해서 DOM을 얻어온다.
+      var a_tags = document.getElementsByTagName("a");
+      //선택한 a태그의 갯수만큼 순회
+      for(let i = 0 ; i < a_tags.length ; i++){
+        //href속성을 대문자로 변환후 www가 포함된 요소를 검색
+        if(a_tags[i].href.toUpperCase().indexOf("WWW") != -1){
+          //링크에 www가 포함된 네이버, 네이트만 경고창으로 출력
+          alert(a_tags[i].href);
+        }
+      }
+    }
+  </script>
+
+  <h2>DOM객체 사용하기</h2>
+
+  <h3>태그명으로 객체얻기1</h3>
+  <input type="checkbox" name="inter" value="POL" checked>정치
+  <input type="checkbox" name="inter" value="ECO">경제
+  <input type="checkbox" name="inter" value="ENT" checked>연예
+  <input type="text" name="txt">
+  <input type="button" value="태그명으로DOM객체얻기" onclick="fnGetElementsByTag();">
+
+  <h2>태그명으로 객체얻기2</h2>
+
+  <ul>
+    <li><a href="https://www.naver.com">네이바</a></li>
+    <li><a href="https://daum.net">도움</a></li>
+    <li><a href="https://www.nate.com">너이트</a></li>
+  </ul>
+  <button onclick="fnGetDomain();">도메인얻어오기</button>
+</body>
+</html>
