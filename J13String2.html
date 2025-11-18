@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>JS의 Core객체 - String</h2>
+  <script>
+    var str1 = 'Hello Javascript';
+    var str2 = '안녕 자바스크립트';
+
+    console.error('split() 함수');
+    //구분자를 통해 문자열을 분리해서 배열로 반환해주는 함수
+    console.warn('구분자가 있는 경우');
+    var tel = '010-1234-5678';
+    //구분자가 일치하는 경우 크기 3인 배열로 반환
+    var telArr = tel.split('-');
+    //각 인덱스의 전화 번호 출력
+    for(let i = 0 ; i < telArr.length ; i++){
+      console.log('telArr[' + i + ']=' + telArr[i] + '<br>');
+    }
+
+    console.warn('구분자가 없는 경우');
+    //구분자가 일치하지 않는 경우 크기가 1인 배열로 반환
+    var telArrNo = tel.split('*');
+    for(let i = 0 ; i < telArrNo ; i++){    
+      console.log('telArrNo[' + i + ']=' + telArrNo[i] + '<br>');
+    }
+
+    console.error('indexOf()함수');
+    //문자열의 좌측(앞)에서부터 검색하여 인덱스 반환
+    console.log(str2.indexOf('a') != -1 ? '자바 포함됨' : '자바 포함안됨');
+    //문자열의 우측(뒤)에서부터 검색하여 인덱스 반환
+    console.error('lastIndexOf()함수');
+    console.log(str1.lastIndexOf('a') != -1 ? 'a 포함됨' : 'a 포함안됨');
+    //만약 찾는 문자열이 없다면 -1을 반환한다.
+    console.log(str1 + '에서 a의 마지막 위치는?' + str1.lastIndexOf('a'));
+  </script>
+
+  <h4>링크 걸기</h4>
+  <div id="myNaver"></div>
+  <div id="myDaum"></div>
+  <!-- 
+  script 태그는 한 문서에 여러개가 있더라도 하나의 영역이라 생각하면 된다.
+  -->
+  <script>
+    //방법1 : JS의 link() 함수 사용
+    let linkText = 'Naver바로가기';
+    //문자열 변수에 링크를 추가
+    let linkHTML = linkText.link('https://www.naver.com');
+    //DOM을 선택한 후 링크 삽입
+    document.getElementById('myNaver').innerHTML = linkHTML;
+    //방법2 : DOM API를 사용하는 방법
+    //문서 객체를 통해 <a> 태그를 동적으로 생성
+    const a = document.createElement('a');
+    //생성된 태그에 href 속성 추가
+    a.href = 'https://www.daum.net';
+    //a태그에 텍스트 삽입
+    a.textContent = 'Daum바로가기';
+    //선택한 DOM의 자식으로 a태그 추가
+    document.getElementById('myDaum').appendChild(a);
+  </script>
+</body>
+</html>

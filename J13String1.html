@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>JS의 Core객체 - string</h2>
+  <script>
+    /*
+    JavaScript에서는 문자열 선언시 더블 혹은 싱글쿼테이션 모두 사용할 수 있다.
+    즉 문자와 문자열의 차이가 없다.
+    */
+    var str1 = 'Hello Javascript';
+    var str2 = '안녕 자바스크립트';
+    var str3 = new String('Hi 자바스크립트');
+
+    //문자열의 길이 반환
+    console.log('str1의 길이:', str1,length);
+
+    /*
+    인수로 주어진 인덱스의 문자 하나를 반환한다.
+    '아이디검증'과 같은 기능을 구현할때 사용.
+    */
+    console.error('charAt()');
+    console.log(str1.charAt(1));
+
+    /*
+    문자열 잘라내기1 : 인덱스 3부터 7 앞부분까지 잘라낸다.
+    */
+    console.error('substring()');
+    console.log('Academy'.substring(3, 7));
+
+    /*
+    문자열 잘라내기2 : 인덱스 3부터 4byte를 잘라낸다.
+    */
+    console.error('substr()');
+    console.log('Academy'.substr(3, 4));
+
+    //특정 인덱스의 아스키코드 반환
+    console.error('charCodeAt()');
+    console.log('Academy'.charCodeAt(1));
+
+    //아스키코드를 문자로 변경해서 반환
+    console.error('String.fromCharCode()');
+    console.log(String.fromCharCode(67)); //대문자 C
+    console.log(String.fromCharCode(99)); //소문자 c
+
+    //문자열은 별도의 변환없이 배열처럼 인덱스로 접근할 수 있다.
+    console.error('문자열을 배열처럼 사용하기');
+    for(let i = 0 ; i < str2.length ; i++){ 
+      console.log('str2['+ i +']=' + str2[i] + '<br>');
+    }
+    /*
+    하지만 인덱스로 접근해서 문자를 변경할 수 는 없다.
+    변경시에는 별도의 변환함수를 사용해야 한다.
+    */
+   
+  </script>
+
+  <h4>퀴즈</h4>
+  <script>
+    /*
+      퀴즈]나이를 매개변수로 받아 아래와같은 결과를 반환하는 함수를
+      정의하시오. 만약 나이가 숫자형식이 아니면 false, 숫자형식이면 
+      true를 반환한다. 반환받은 결과를 이용하여 '숫자형식입니다.' 
+      혹은 '숫자형식이아닙니다'라는 문자열을 출력하는 프로그램을 
+      작성하시오
+    */ 
+    function isNumber(param) {
+      let chNum = false;
+      for(let i = 0 ; i < param.length ; i++){
+        if(param.charCodeAt(i) >= 48 && param.charCodeAt(i) <= 57) chNum = true;
+        else chNum = false;
+      }
+      return chNum;
+    }
+    console.error('퀴즈 > 숫자 형식 찾기');
+    //숫자형식
+    var isNum1 = isNumber("100");
+    (isNum1==true) ? console.log('숫자형식') : console.log('숫자형식아님');
+    //숫자형식아님
+    var isNum2 = isNumber("10A");
+    (isNum2==true) ? console.log('숫자형식') : console.log('숫자형식아님');
+
+  </script>
+</body>
+</html>
