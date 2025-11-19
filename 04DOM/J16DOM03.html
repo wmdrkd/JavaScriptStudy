@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    /*
+    태그 선택자(Selector) : 문서의 모든 div태그를 선택
+    */
+    div{border: 1px solid blue;}
+    /*
+    아이디 선택자 : id가 부여된 엘리먼트 선택
+    */
+    #mydiv{font-size: 24px;}
+    /*
+    클래스 선택자 : class가 부여된 엘리먼트 선택
+    */
+    .mycls{padding: 5px;}
+    /*
+    CSS에서는 id, class 속성 모두 2개 이상의 엘리먼트에 적용된다.
+    */
+  </style>
+  <script>
+    /*
+    id 속성값은 HTML문서에 하나만 기술할 수 있다.
+    만약 아래와 같이 여러개의 동일한 id가 존재하면 첫번째 엘리먼트만 선택되어 스타일이
+    적용된다.
+    */
+    function myDivId() {
+      //DOM을 얻어온 후..
+      var div = document.getElementById("mydiv");
+      //스타일을 지정한다.
+      div.style.color = "red";
+    }
+    /*
+    class속성은 2개이상 적용할 수 있다.
+    아래와 같이 배열로 DOM을 얻어와서 일괄적으로 적용한다.
+    */
+    function myDivClass() {
+      var divs = document.getElementsByClassName("mycls");
+      for(let i = 0 ; i < divs.length ; i++){
+        divs[i].style.color = "green";
+      }
+    }
+  </script>
+  <div id="mydiv" class="mycls">MyDiv1</div>
+  <div id="mydiv" class="mycls">MyDiv2</div>
+  <div id="mydiv" class="mycls">MyDiv3</div>
+  <div id="mydiv" class="mycls">MyDiv4</div>
+
+  <button type="button" onclick="myDivId();">
+    Id 버튼
+  </button>
+  <button type="button" onclick="myDivClass();">
+    Class버튼
+  </button>
+</body>
+</html>

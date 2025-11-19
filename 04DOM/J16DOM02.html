@@ -8,8 +8,13 @@
 <body>
   <script>
     function fnGEtElementsByName() {
+      //input 태그의 name 속성을 통해 DOM을 배열로 얻어옴
       var names = document.getElementsByName('inter');
       for(let i = 0 ; i < names.length ; i++){
+        /*
+        checkbox를 체크할때는 true 혹은 checked 사용
+                   언체크할때는 false 혹은 null사용
+        */
         if(names[i].checked == true){
           names[i].checked = null;
           //names[i].checked = false;
@@ -22,7 +27,9 @@
     }
 
     function fnGetElementsClass() {
+      //class 명을 통해 DOM을 얻어온 후 배열로 저장
       var portals = document.getElementsByClassName("portal");
+      //시작태그와 종료태그 사이의 컨템츠를 얻어와서 alert로 출력
       for(let i = 0 ; i < portals.length ; i++){
         alert(portals[i].innerHTML);
       }
@@ -44,5 +51,37 @@
   <button onclick="fnGetElementsClass();">
     클래스명으로 DOM객체 얻어오기
   </button>
+
+  <script>
+    function fnChangeImg(imgNum) {
+      //img태그의 id 속성을 통해 DOM을 얻어옴
+      var img_tag = document.getElementById('trump');
+      //src 속성에 이미지의 경로 설정
+      img_tag.src = "../images/" + imgNum + ".jpg";
+      //width 속성에 가로 크기 설정
+      img_tag.width = parseInt(imgNum * 50);
+    }
+  </script>
+  <h2>동적으로 이미지 교체하기(ID로 DOM객체 얻기)</h2>
+  <fieldset>
+    <legend>이미지 동적 교체</legend>
+    <!-- 
+    a태그에서 JS함수를 호출하는 경우에는
+      href속성 : 'javascript:함수명'과 같이 작성해야한다.
+      이벤트핸들러 : JS함수를 호출하는게 목적이므로 함수명만 쓰면된다.
+    -->
+    <a href="javascript:fnChangeImg(1);" onmouseover="fnChangeImg(1);">1번이미지</a>
+    <a href="javascript:fnChangeImg(2);" onmouseover="fnChangeImg(2);">2번이미지</a>
+    <a href="javascript:fnChangeImg(3);" onmouseover="fnChangeImg(3);">3번이미지</a>
+    <a href="javascript:fnChangeImg(4);">4번이미지</a>
+    <a href="javascript:fnChangeImg(5);">5번이미지</a>
+    <a href="javascript:fnChangeImg(6);">6번이미지</a>
+    <a href="javascript:fnChangeImg(7);">7번이미지</a>
+    <a href="javascript:fnChangeImg(8);">8번이미지</a>
+    <a href="javascript:fnChangeImg(9);">9번이미지</a>
+    <a href="javascript:fnChangeImg(10);">10번이미지</a>
+    <hr>
+    <img id="trump" src="" width="100" alt="이미지교체하기">
+  </fieldset>
 </body>
 </html>

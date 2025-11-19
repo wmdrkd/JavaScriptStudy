@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /*
+    div 태그선택자를 통해 스타일 부여
+    */
+    div{
+      width: 130px; height: 50px; border: 1px solid gray;
+      float: left; margin: 20px; padding: 10px; cursor: pointer; 
+    }
+    /*
+    div 태그 중 myDiv2 아이디를 가진 엘리먼트의 배경색 지정
+    */
+    div#myDiv2{
+      background-color: chocolate;
+    }
+  </style>
+  <script>
+   /*
+   myDiv1은 style 속성을 통해 태그 자체에 배경색을 지정했으므로 아래와 같이 CSS 속성값을 
+   읽어올 수 있다.
+   */
+    function readStyle1() { 
+      //DOM 요소를 얻어옴  
+      let myDiv1 = document.getElementById("myDiv1");
+      //style 속성을 통해 배경색을 얻어옴
+      let myStyle = myDiv1.style.backgroundColor;
+      console.log('지정된 배경색1:' + myStyle);
+    }
+
+    /*
+    <style> 태그를 통한 임베딩 방식으로 배경색을 지정하는 경우에는 기존의 방법으로 CSS 속성값을
+      읽을 수 없다.
+    */
+    function readStyle2() {
+      let myDiv2 = document.getElementById("myDiv2");
+
+      //let myStyle = myDiv2.style.backgroundColor;
+      //console.log('지정된 배경색2:' + myStyle);
+
+      //window 객체에서 제공하는 함수를 통해 DOM을 얻어온다.
+      var style = window.getComputedStyle(myDiv2);
+      //이를 통해 원하는 스타일 속성값을 읽어올 수 있다.
+      var value = style.getPropertyValue("background-color");
+      console.log('지정된 배경색2:' + value);
+    }
+  </script>
+</head>
+<body>
+  <h2>스타일 속성값 읽어오기</h2>
+  <p>
+    각 박스를 클릭하면 속성값을 확인할 수 있습니다.
+  </p>
+  <div id="myDiv1" style="background-color: blueviolet;" onclick="readStyle1();">
+    인라인 스타일로 배경색 설정
+  </div>
+  <div id="myDiv2" onclick="readStyle2();">
+    임배딩 스타일로 배경색 설정
+  </div>
+</body>
+</html>

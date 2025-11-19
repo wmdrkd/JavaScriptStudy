@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    //전역변수
+    var pTag, pSize;
+    //이 문서의 로드가 완료된 후 익명 함수가 실행됨
+    window.onload = function () {
+      //기사가 있는 p태그의 DOM 요소를 얻어옴
+      pTag = document.getElementById("article");
+      //태그에 적용된 폰트 크기를 읽어온 후 숫자로 변환
+      pSize = parseInt(pTag.style.fontSize);
+      console.log('기본폰트사이즈', pSize);
+    }
+    
+    /*
+    JavaScript에서 스타일을 적용하는 방법
+    : HTML에서 스타일을 적용할 DOM요소를 얻어온 후 DOM변수에 Style을 추가하고, 뒷 부분에 CSS속성을
+      연결한다.
+      color와 같은 경우는 그대로 사용하면 되고 background-color와 같은 경우세는 하이픝(-)을 제거한
+      후 첫문자를 대문자로 변경한다.
+    
+    */
+    function fnArticle(flag) {
+      /*
+      폰트의 크기, 마진, 패딩과 같이 숫자로 속성값을 지정해야 하는 경우에는 pt, px, em과 같은 단위를
+      반드시 추가해야한다.
+      */
+      switch(flag){
+        case '+':
+          pSize += 10;
+          pTag.style.fontSize = pSize + 'px';
+          break;
+        case '-':
+          pSize -= 10;
+          pTag.style.fontSize = pSize + 'px';
+          break;
+        case 'R':
+          pTag.style.color = 'red'; //글자 색깔
+          break;
+        case 'G':
+         pTag.style.color = 'green';
+          break;
+        case 'B':
+         pTag.style.color = 'blue';
+          break;
+        case 'Bo':
+          pTag.style.fontWeight = 'bold'; //글자 두께
+          break;
+        case 'No':
+          pTag.style.fontWeight = 'normal';
+          break;
+        case 'Ce':
+          pTag.style.textAlign = 'center'; //글자 정렬
+          break;
+        case 'Le':
+          pTag.style.textAlign = 'left';
+          break;
+        case 'B_red':
+          pTag.style.backgroundColor = 'red'; //배경색
+          break;
+        case 'B_silver':
+          pTag.style.backgroundColor = 'silver';
+          break;
+        case 'B_white':
+          pTag.style.backgroundColor = 'white';
+          break;
+        default:
+          pTag.style.color = 'black';
+      }
+    }
+
+    /*
+    퀴즈] 글꼴바꾸기 버튼을 계속 누를때마다 아래 5가지
+    폰트가 토글되어 적용될수 있도록 함수를 정의하시오.
+    글꼴 : [Verdana, 굴림체, 휴먼옛체, 궁서, Impact]
+    */
+    let cnt = 0;
+    function setFont() {
+      let fonts = ['Verdana', '굴림체', '휴먼옛체', '궁서', 'Impact'];
+      let font = document.getElementById('article');
+
+      font.style.fontFamily = fonts[++cnt % 5];
+    }
+  </script>
+</head>
+<body>
+  <body>
+	<h2>자바스크립트로 CSS제어하기</h2>
+	<input type="button" value="글꼴바꾸기" onclick="setFont();"/>
+	<fieldset>
+		<legend>신문기사</legend>
+		<button onclick="fnArticle('+');">+</button>
+		<button onclick="fnArticle('-');">-</button>
+		<button onclick="fnArticle('R');">Red</button>
+		<button onclick="fnArticle('G');">Green</button>
+		<button onclick="fnArticle('B');">Blue</button>
+		<button onclick="fnArticle('');">Black</button>        
+		<button onclick="fnArticle('Bo');">볼드체</button>
+		<button onclick="fnArticle('No');">보통체</button>
+    <br>
+		<button onclick="fnArticle('Ce');">가운데정렬</button>
+		<button onclick="fnArticle('Le');">좌측정렬</button>
+		<button onclick="fnArticle('B_red');">배경색(red)</button>
+		<button onclick="fnArticle('B_silver');">배경색(silver)</button>
+		<button onclick="fnArticle('B_white');">배경색(white)</button>
+	</fieldset>
+	<p style="font-size:12px;" id="article">
+    로렘입숨을 문단수 2~4개 정도로 삽입하세요. <br><br>
+    국가의 세입·세출의 결산, 국가 및 법률이 정한 단체의 회계검사와 행정기관 및 공무원의 직무에 관한 감찰을 하기 위하여 대통령 소속하에 감사원을 둔다.
+    <br><br>
+    재판의 전심절차로서 행정심판을 할 수 있다. 행정심판의 절차는 법률로 정하되, 사법절차가 준용되어야 한다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다.
+    <br><br>
+    훈장등의 영전은 이를 받은 자에게만 효력이 있고, 어떠한 특권도 이에 따르지 아니한다. 감사원은 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 그 결과를 보고하여야 한다.
+    <br><br>
+    대통령은 국가의 원수이며, 외국에 대하여 국가를 대표한다. 대통령은 취임에 즈음하여 다음의 선서를 한다. 제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다.
+	</p>
+    
+</body>
+
+</body>
+</html>

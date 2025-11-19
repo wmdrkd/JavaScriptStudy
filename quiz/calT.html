@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table{
+      border: 1px solid #000000;
+      background-color: #dddddd;
+      border-radius: 10px;
+    }
+    button, input{
+      border: 1px solid #dddddd;
+      border-radius: 10px;
+      font-size: 1.5em; height: 50px;
+      color: #ffffff;
+    }
+    .btn_type1{
+      width: 204px;background-color: #7c7c7c;
+    }
+    .btn_type2{
+      width: 100px;background-color: #373737;
+    }
+    .btn_type3{
+      width: 100px;background-color: #FA960A;
+    }
+    #lcd{
+      background-color: #70C738;font-size: 40px;
+      border-radius: 10px;font-weight: bold;
+      text-align: right;padding: 10px;
+    }
+    /* LCD에 텍스트가 길어지게 되면 영역을 벗어나게 되므로 
+    overflow속성으로 텍스트를 적당히 잘라 표시할 수 있다. */
+    #out-lcd{
+      width:410px;overflow:hidden;
+    }
+  </style>
+  <script>
+    function inputNum(param) {
+      let lcd = document.getElementById('lcd');
+      if(lcd.innerHTML == '0'){
+        lcd.innerHTML = '';
+      }
+      if(param == '='){
+        //=이라면 입력된 내용을 계산한다.
+        let result = eval(lcd.innerText);
+        lcd.innerText = result;
+      }
+      else{
+        //=이 아니라면 문자를 연결한다.
+        lcd.innerHTML += param;
+      }
+    }
+
+    let clearLcd = function () {
+      let lcd = document.getElementById('lcd');
+      lcd.innerText = '0';
+    }
+
+    let backspaceLcd = () => {    
+      let lcd = document.getElementById('lcd');
+      //입력된 문자열의 길이
+      let strLen = lcd.innerText.length;
+      //길이 -1을 이요해서 가장 오른쪽의 문자 하나를 자름
+      lcd.innerHTML = lcd.innerHTML.substr(0, strLen-1);
+      //LCD의 모든 내용이 지워지면 0으로 대체
+      if(lcd.innerHTML == ''){
+        lcd.innerHTML = '0';
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>계산기</h2>
+  <!-- 3행4열의 테이블 생성 -->
+  <table align="center">
+    <tr>
+      <td colspan="4">
+        <div id="out-lcd">
+          <div id="lcd">0</div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><button class="btn_type1" onclick="backspaceLcd();">Backspace</button></td>
+      <td colspan="2"><button class="btn_type1" onclick="clearLcd();">Clear</button></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="1" class="btn_type2" onclick="inputNum(1);"></td>
+      <td><input type="button" value="2" class="btn_type2" onclick="inputNum(2);"></td>
+      <td><input type="button" value="3" class="btn_type2" onclick="inputNum(this.value);"></td>
+      <td><input type="button" value="+" class="btn_type3" onclick="inputNum(this.value);"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="4" class="btn_type2" onclick="inputNum(4);"></td>
+      <td><input type="button" value="5" class="btn_type2" onclick="inputNum(5);"></td>
+      <td><input type="button" value="6" class="btn_type2" onclick="inputNum(this.value);"></td>
+      <td><input type="button" value="=" class="btn_type3" onclick="inputNum(this.value);"></td>
+    </tr>
+  </table>
+</body>
+</html>

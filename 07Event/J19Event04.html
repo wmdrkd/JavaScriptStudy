@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #myBox{
+      background-color: aquamarine;
+      padding: 10px; text-align: center;
+      width: 250px; height: 50px; line-height: 25px;
+    }
+  </style>
+  <script>
+    //전역변수 생성
+    let globalNum = 0;
+    let mBox;
+    //load 이벤트핸들러를 window 객체에 부착
+    window.onload = function () {
+      //문서 로드 후 DOM 요소 얻어옴
+      mBox = document.getElementById("myBox");
+      /*
+      DOM 요소에 이벤트핸들러를 붙이 루 함수를 연결한다.
+      이때 소괄호는 제거하고 함수명만 사용해야 한다.
+      */
+     //마우스 왼쪽 버튼 클릭 이벤트쪽
+      mBox.onclick = clickFunc;
+      //mBox.onclick = clickFunc(); //연결안됨
+      //마우스 오른쪽 버튼 클릭 이벤트
+      mBox.addEventListener("contextmenu", rClickFunc);
+    }
+
+    //마우스 좌클릭시 실행할 함수 정의
+    function clickFunc() {
+      //숫자증가 및 폰트 변경
+      mBox.innerText = globalNum++;
+      mBox.style.color = 'red';
+      mBox.style.fontSize = "1.8em";
+    }
+
+    function rClickFunc() {
+      /*
+      우클릭시 나오는 컨텍스트메뉴(팝업메뉴)를 차단한다.
+      즉 이벤트가 발생할때의 '기본동작'을 차단하는 역할을 한다.
+      */
+      event.preventDefault();
+      //숫자 감소
+      mBox.innerText = globalNum--;
+      mBox.style.color = 'blue';
+      mBox.style.fontSize = "1.2em"
+    }
+  </script>
+</head>
+<body>
+  <h2>이벤트 - load 네번째</h2>
+  <div id="myBox" style="cursor: pointer;">
+    좌클릭하면 숫자가 증가<br>
+    우클릭하면 숫자가 감소
+  </div>
+</body>
+</html>
