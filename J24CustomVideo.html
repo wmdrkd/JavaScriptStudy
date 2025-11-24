@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    //비디오 객체 저장을 위한 전역변수 생성
+    var video;
+    window.onload = function () {
+      //재생시간을 표시할 엘리먼트의 DOM
+      var currentSpan = document.getElementById("currenttime");
+      var totalSpan = document.getElementById("totaltime");
+      //비디오 태그의 DOM
+      video = document.getElementById("video");
+      //첫 재생시의 볼륨 설정
+      video.volume = 0.5;
+      /*
+      동영상 재생시 지속적으로 발생되는 timeupdate 이벤트를 비디오에 부착한다.
+      이를 통해 재생시간에 대한 정보를 실시간으로 받을 수 있다.
+      */
+      video.addEventListener("timeupdate", function () {
+        //현재 재생시간을 반환(변환함수O)
+        currentSpan.innerHTML = timeShow(video.currentTime);
+        //동영상의 전체 재생시간을 초 단위로 반환(변환함수X)
+        totalSpan.innerHTML = video.duration; //timeShow(video.duration);
+        
+        //프로그래스 태그의 DOM
+        let progress = document.getElementById("progress");
+        
+        //반환되는 시간을 통해 프로그래스바를 설정한다. 재생상태를 표시함.
+        progress.max = video.duration;
+        progress.value = video.currentTime;
+      });
+    }
+    //비디오 재생
+    function play() {
+      //화면을 숨기고 싶을때 사용하는 속성
+      video.hidden = ""; //보임 상태로 설정(디폴트값)
+      video.play();
+    }
+    //일시정지
+    function stop() {
+      video.hidden = true; //회면을 숨김 상태로 전환
+      video.pause();
+      /*
+      hidden이 true인 상태면 일시정지 했을때 화면 자체가 숨김처리된다.
+      따라서 필요한 경우에만 사용하도록 한다.
+      */
+    }
+    //처음부터 다시 재생
+    function start() {
+      //재생시간을 0으로 강제 설정한다.
+      video.currentTime = 0;
+      video.play();
+    }
+    /*
+    timeupdate 이벤트를 통해 반환되는 재생시간은 123.xx와 같이 초단위호 표현되므로, 가독성을 위해
+    00:00:00 형식으로 변환 후 출력한다.
+    */
+    function timeShow(seconds) {
+      //소수점 형식으로 반환되는 시간을 반올림 처리
+      seconds = Math.round(seconds);
+      //시간 계산
+      var h = parseInt(seconds / 3600);
+      //분 계산
+      var m = parseInt((seconds % 3600) / 60);
+      //초 계산
+      var s = seconds % 60;
+      /*
+      시간이 10미만일때는 0:0:0과 같이 출력될 수 있으므로 문자열 0을 추가하여 두자리의 포맷을
+      만들어 준다.
+      */
+      var hour = (h < 10) ? '0' + h : h;
+      var min = (m < 10) ? '0' + m : m;
+      var sec = (s < 10) ? '0' + s : s;
+
+      return hour + ":" + min + ":" + sec;
+    }
+    //볼륨 조절 : 0~1사이로 조절 가능
+    function setVolumn(value) {
+      if(value == 0){
+        //0이면 음소거
+        video.muted = true;
+      }
+      else{
+        //0이 아니면 음소거 해제
+        video.muted = false;
+        var nowVolume = video.volume;
+        //0~1의 범위를 벗어나면 강제로 맞춤 설정한다.
+        if(value == 1){
+          nowVolume += 0.1;
+          video.volume = (nowVolume > 1) ? 1 : nowVolume;
+        }
+        else{
+          nowVolume -= 0.1;
+          video.volume = (nowVolume < 0) ? 0 : nowVolume;
+        }
+      }
+    }
+
+    function setPlaybackRate(value) {
+      if(value == 1){
+        video.playbackRate += 0.25;
+      }
+      else{
+        video.playbackRate -= 0.25;
+      }
+    }
+    //건너뛰기 설정
+    function setTime(value) {
+      //10초씩 앞/뒤로 이동한다.
+      if(value == 1){
+        video.currentTime += 10;
+      }
+      else{
+        video.currentTime -= 10;
+      }
+    }
+  </script>
+  <style>
+    div {
+        border: 1px solid red;
+        width: 300px;
+    }
+    input {
+        position: relative;	z-index: 2; height: 40px; line-height: 35px;
+        background-color: #333;	border: 2px solid #333;
+        color: #fff;
+    }
+    input:hover {
+        background-color: #fff; border-color: #59b1eb; color: #59b1eb;
+    }
+    input::before, input::after {
+        top: 0; width: 50%; height: 100%;
+        background-color: #333;
+    }
+    input:hover::before, input:hover::after {
+        width: 0; background-color: #59b1eb;
+    }
+</style>
+
+</head>
+<body>
+  <h2>JavaScript를 이용한 커스텀 비디오 만들기</h2>
+  <div>
+    <!-- 
+    poster 속성으로 영상이 재생되기전 미리보기 클릭과 같은 이미지을 표현할 수 있다.
+    -->
+    <video id="video" width="300" height="200" src="./media/video.mp4" muted autoplay 
+    controls poster="./images/html5.png"></video>
+  </div>
+  <div>
+    <!-- 
+    영상 재생시 상태를 보여줌
+    -->
+    <progress value="0" id="progress" style="width: 300px;"></progress>
+  </div>
+  <div>
+    <!-- 
+    현재 재생시간 / 전체재생시간 표시
+    -->
+    <span id="currenttime"></span> / <span id="totaltime"></span>
+  </div>
+  <input type="button" value="재생하기" onclick="play();">
+  <input type="button" value="일시정지" onclick="stop();">
+  <input type="button" value="처음부터재생하기" onclick="start();">
+  <input type="button" value="볼륨+" onclick="setVolumn(1);">
+  <input type="button" value="볼륨-" onclick="setVolumn(-1);">
+  <input type="button" value="음소거" onclick="setVolumn(0);">
+  <input type="button" value="재생속도+" onclick="setPlaybackRate(1);">
+  <input type="button" value="재생속도-" onclick="setPlaybackRate(-1);">
+  <input type="button" value="10초앞으로" onclick="setTime(1);">
+  <input type="button" value="10초뒤로" onclick="setTime(-1);">
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 문제04] filter() 함수를 사용하여 가격이 1000원 이상인 상품의 
+     이름만 추출하여 새로운 배열을 반환하는 프로그램을 작성하시오.  -->
+    <script>
+        const products = [
+            { name: 'apple', price: 1000, category: 'fruit' },
+            { name: 'banana', price: 800, category: 'fruit' },
+            { name: 'notebook', price: 20000, category: 'electronics' },
+            { name: 'mouse', price: 5000, category: 'electronics' }
+        ];
+        newProducts = products.filter(function(pdt){
+          /*
+          가격이 1000원 이상인 객체만 반환해서 새로운 배열을 생성한다.
+          */  
+          return pdt.price >= 1000;
+        })
+        .map(function (pdt2) {
+          /*
+          filter 함수에서 필터링된 객체에서 이름만 추출하여 반환해서 새로운 배열을 생성한다.
+          */
+          return pdt2.name;
+        })
+        console.log(newProducts);
+    </script>
+</body>
+</html>

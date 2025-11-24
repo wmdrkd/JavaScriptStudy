@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    문제01]  map() 함수를 사용하여 문자열 배열의 각 요소를 모두 대문자로 변환하여 
+    새로운 배열을 반환하는 프로그램을 작성하시오. 
+    */
+    const words = ['hello', 'world', 'javascript'];
+    const upperWords = words.map(function (w) {
+      return w.toUpperCase();
+    });
+    console.log(upperWords);
+  </script>
+</body>
+</html>
